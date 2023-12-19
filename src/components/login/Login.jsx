@@ -1,5 +1,6 @@
 //import React from 'react';
 import './Login.css';
+import '../../App.css';
 import { Link } from 'react-router-dom';
 import { FaUserShield } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
@@ -35,7 +36,7 @@ const Login = () => {
                     </div>
 
                     <form action="" className='form grid'>
-                        <span>Login Status will go here</span>
+                        <span className='showMessage'>Login Status</span>
 
                         <div className="inputDiv">
                             <label htmlFor="username">Usuário</label>
