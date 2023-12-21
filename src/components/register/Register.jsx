@@ -1,6 +1,8 @@
 //import React from 'react';
+import { useState } from 'react';
 import './Register.css';
 import '../../App.css';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaUserShield } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
@@ -8,7 +10,29 @@ import { AiOutlineSwapRight } from 'react-icons/ai';
 import video from '../../loginAssets/video.mp4';
 import logo from '../../loginAssets/logo.png';
 
+
 const Register = () => {
+
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const createUser = () => {
+
+        axios.post('http://localhost:3001/register', {
+
+            email: email,
+            username: username,
+            password: password
+        })
+            .then(() => {
+                console.log('Usuário cadastrado com sucesso!');
+            })
+            .catch((error) => {
+                console.error('Erro na requisição HTTP:', error);
+            });
+    };
+
     return (
         <div className="loginPage">
             <div className="container flex">
@@ -41,7 +65,10 @@ const Register = () => {
                             <label htmlFor="email">Email</label>
                             <div className="input flex">
                                 <FaUserShield className='icon' />
-                                <input type="text" id='email' placeholder='Informe seu email' />
+                                <input type="text" id='email' placeholder='Informe seu email'
+                                    onChange={(event) => {
+                                        setEmail(event.target.value);
+                                    }} />
                             </div>
                         </div>
 
@@ -49,7 +76,10 @@ const Register = () => {
                             <label htmlFor="username">Usuário</label>
                             <div className="input flex">
                                 <FaUserShield className='icon' />
-                                <input type="text" id='username' placeholder='Informe seu usuário' />
+                                <input type="text" id='username' placeholder='Informe seu usuário'
+                                    onChange={(event) => {
+                                        setUsername(event.target.value);
+                                    }} />
                             </div>
                         </div>
 
@@ -57,16 +87,19 @@ const Register = () => {
                             <label htmlFor="password">Senha</label>
                             <div className="input flex">
                                 <BsShieldLockFill className='icon' />
-                                <input type="text" id='password' placeholder='Informe sua senha' />
+                                <input type="password" id='password' placeholder='Informe sua senha'
+                                    onChange={(event) => {
+                                        setPassword(event.target.value);
+                                    }} />
                             </div>
                         </div>
 
-                        <Link to={'/'}>
-                            <button type='submit' className='btn flex'>
-                                <span>Registre-se</span>
-                                <AiOutlineSwapRight className='icon' />
-                            </button>
-                        </Link>
+
+                        <button type='submit' className='btn flex' onClick={createUser}>
+                            <span>Registre-se</span>
+                            <AiOutlineSwapRight className='icon' />
+                        </button>
+
 
                     </form>
                 </div>

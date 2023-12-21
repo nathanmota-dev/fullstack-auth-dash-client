@@ -1,7 +1,9 @@
 //import React from 'react';
+import { useState } from 'react';
 import './Login.css';
 import '../../App.css';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserShield } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
 import { AiOutlineSwapRight } from 'react-icons/ai';
@@ -9,6 +11,34 @@ import video from '../../loginAssets/video.mp4';
 import logo from '../../loginAssets/logo.png';
 
 const Login = () => {
+
+    const [loginUsername, setLoginUsername] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const navigateTo = useNavigate();
+
+    const loginUser = (e) => {
+
+        e.preventDefault();
+
+        axios.post('http://localhost:3001/login', {
+
+            username: loginUsername,
+            password: loginPassword
+        })
+            .then((response) => {
+                console.log(response);
+
+                if (response.data.message) {
+                    navigateTo('/');
+                } else {
+                    navigateTo('/dashboard');
+                }
+            })
+            .catch((error) => {
+                console.error('Erro no login:', error);
+            });
+    }
+
     return (
         <div className="loginPage">
             <div className="container flex">
@@ -42,7 +72,10 @@ const Login = () => {
                             <label htmlFor="username">Usuário</label>
                             <div className="input flex">
                                 <FaUserShield className='icon' />
-                                <input type="text" id='username' placeholder='Entre com seu usuário' />
+                                <input type="text" id='username' placeholder='Entre com seu usuário'
+                                    onChange={(event) => {
+                                        setLoginUsername(event.target.value);
+                                    }} />
                             </div>
                         </div>
 
@@ -50,11 +83,14 @@ const Login = () => {
                             <label htmlFor="password">Senha</label>
                             <div className="input flex">
                                 <BsShieldLockFill className='icon' />
-                                <input type="text" id='password' placeholder='Entre com sua senha' />
+                                <input type="text" id='password' placeholder='Entre com sua senha'
+                                    onChange={(event) => {
+                                        setLoginPassword(event.target.value);
+                                    }} />
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex'>
+                        <button type='submit' className='btn flex' onClick={loginUser}>
                             <span>Login</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>
