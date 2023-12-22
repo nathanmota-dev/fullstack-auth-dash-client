@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './Register.css';
 import '../../App.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserShield } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
 import { AiOutlineSwapRight } from 'react-icons/ai';
@@ -16,8 +16,11 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigateTo = useNavigate();
 
-    const createUser = () => {
+    const createUser = (e) => {
+
+        e.preventDefault();
 
         axios.post('http://localhost:3001/register', {
 
@@ -27,6 +30,7 @@ const Register = () => {
         })
             .then(() => {
                 console.log('Usuário cadastrado com sucesso!');
+                navigateTo('/');
             })
             .catch((error) => {
                 console.error('Erro na requisição HTTP:', error);
@@ -59,7 +63,7 @@ const Register = () => {
                         <h3>Deixe a gente te conhecer!</h3>
                     </div>
 
-                    <form action="" className='form grid'>
+                    <form action="" className='form grid' onSubmit={createUser}>
 
                         <div className="inputDiv">
                             <label htmlFor="email">Email</label>
@@ -95,7 +99,7 @@ const Register = () => {
                         </div>
 
 
-                        <button type='submit' className='btn flex' onClick={createUser}>
+                        <button type='submit' className='btn flex'>
                             <span>Registre-se</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>

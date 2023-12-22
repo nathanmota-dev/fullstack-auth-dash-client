@@ -14,6 +14,7 @@ const Login = () => {
 
     const [loginUsername, setLoginUsername] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigateTo = useNavigate();
 
     const loginUser = (e) => {
@@ -29,13 +30,16 @@ const Login = () => {
                 console.log(response);
 
                 if (response.data.message) {
+                    setError(response.data.message);
                     navigateTo('/');
                 } else {
+                    setError(null);
                     navigateTo('/dashboard');
                 }
             })
             .catch((error) => {
                 console.error('Erro no login:', error);
+                setError('Erro ao processar a solicitação');
             });
     }
 
@@ -62,11 +66,11 @@ const Login = () => {
                 <div className="formDiv flex">
                     <div className="headerDiv">
                         <img src={logo} alt="Logo" />
-                        <h3>Bem vindo de volta!</h3>
+                        <h3>Bem vindo!</h3>
                     </div>
 
                     <form action="" className='form grid'>
-                        <span className='showMessage'>Login Status</span>
+                        <span style={{ display: error ? 'inline' : 'none' }} className='showMessage'>{error}</span>
 
                         <div className="inputDiv">
                             <label htmlFor="username">Usuário</label>
