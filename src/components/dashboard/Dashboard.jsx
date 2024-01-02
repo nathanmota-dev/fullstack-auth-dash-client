@@ -1,13 +1,14 @@
 //import React from 'react';
 import '../dashboard/Dashboard.css';
 import SideBar from './sidebarSection/SideBar';
+import BodySection from './bodySection/BodySection';
+//import { video } from '../../loginAssets/video.mp4';
 
 const Dashboard = () => {
     return (
         <div>
-            This is a Dashboard
             <SideBar />
-            <a href="/">Log out</a>
+            <BodySection />
         </div>
     );
 }
