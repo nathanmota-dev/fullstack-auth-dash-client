@@ -87,7 +87,7 @@ const Login = () => {
                             <label htmlFor="password">Senha</label>
                             <div className="input flex">
                                 <BsShieldLockFill className='icon' />
-                                <input type="text" id='password' placeholder='Entre com sua senha'
+                                <input type="password" id='password' placeholder='Entre com sua senha'
                                     onChange={(event) => {
                                         setLoginPassword(event.target.value);
                                     }} />
