@@ -4,23 +4,38 @@ import './Register.css';
 import '../../App.css';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup"
+import { string, object } from "yup";
 import { FaUserShield } from 'react-icons/fa';
 import { BsShieldLockFill } from 'react-icons/bs';
 import { AiOutlineSwapRight } from 'react-icons/ai';
 import video from '../../loginAssets/video.mp4';
 import logo from '../../loginAssets/logo.png';
 
+const schema = object({
+
+    email: string().required("Email obrigatório").email("Email inválido"),
+    username: string().required("Usuário obrigatório"),
+    password: string().required("Senha obrigatória").min(6, "Mínimo de 6 caracteres")
+})
 
 const Register = () => {
 
+    const { register, handleSubmit: onSubmit, watch, formState: { errors } } = useForm( { resolver: yupResolver(schema) });
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigateTo = useNavigate();
 
-    const createUser = (e) => {
+    const handleSubmit = (data) => {
+        console.log(data);
+        createUser(data);
+    };
 
-        e.preventDefault();
+    const createUser = () => {
+
+        //e.preventDefault();
 
         axios.post('http://localhost:3001/register', {
 
@@ -63,13 +78,17 @@ const Register = () => {
                         <h3>Deixe a gente te conhecer!</h3>
                     </div>
 
-                    <form action="" className='form grid' onSubmit={createUser}>
+                    <form action="" className='form grid' onSubmit={onSubmit(handleSubmit)}>
 
                         <div className="inputDiv">
                             <label htmlFor="email">Email</label>
                             <div className="input flex">
                                 <FaUserShield className='icon' />
-                                <input type="text" id='email' placeholder='Informe seu email'
+                                <input
+                                    type="text"
+                                    id='email'
+                                    placeholder='Informe seu email'
+                                    {...register('email', { required: true })}
                                     onChange={(event) => {
                                         setEmail(event.target.value);
                                     }} />
@@ -80,7 +99,11 @@ const Register = () => {
                             <label htmlFor="username">Usuário</label>
                             <div className="input flex">
                                 <FaUserShield className='icon' />
-                                <input type="text" id='username' placeholder='Informe seu usuário'
+                                <input
+                                    type="text"
+                                    id='username'
+                                    placeholder='Informe seu usuário'
+                                    {...register('username', { required: true })}
                                     onChange={(event) => {
                                         setUsername(event.target.value);
                                     }} />
@@ -91,7 +114,11 @@ const Register = () => {
                             <label htmlFor="password">Senha</label>
                             <div className="input flex">
                                 <BsShieldLockFill className='icon' />
-                                <input type="password" id='password' placeholder='Informe sua senha'
+                                <input
+                                    type="password"
+                                    id='password'
+                                    placeholder='Informe sua senha'
+                                    {...register('password', { required: true })}
                                     onChange={(event) => {
                                         setPassword(event.target.value);
                                     }} />
