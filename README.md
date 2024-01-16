@@ -81,6 +81,8 @@ FrontEnd:
 * React.js
 * React Icons (icon library)
 * SCSS
+* React Hook Form
+* Yup.js
 
 BackEnd:
 
