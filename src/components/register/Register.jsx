@@ -16,20 +16,25 @@ import logo from '../../loginAssets/logo.png';
 const schema = object({
 
     email: string().required("Email obrigatório").email("Email inválido"),
-    username: string().required("Usuário obrigatório"),
-    password: string().required("Senha obrigatória").min(6, "Mínimo de 6 caracteres")
+    username: string().required("Usuário obrigatório").min(3, "Mínimo de 3 caracteres"),
+    password: string().required("Senha obrigatória").min(6, "Mínimo de 6 caracteres").max(12, "Máximo de 12 caracteres")
 })
 
 const Register = () => {
 
-    const { register, handleSubmit: onSubmit, watch, formState: { errors } } = useForm( { resolver: yupResolver(schema) });
+    const {
+        register,
+        handleSubmit: onSubmit,
+        //watch,
+        formState: { errors }
+    } = useForm({ resolver: yupResolver(schema) });
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigateTo = useNavigate();
 
     const handleSubmit = (data) => {
-        console.log(data);
         createUser(data);
     };
 
@@ -92,6 +97,7 @@ const Register = () => {
                                     onChange={(event) => {
                                         setEmail(event.target.value);
                                     }} />
+                                <span className="error">{errors?.email?.message}</span>
                             </div>
                         </div>
 
@@ -107,6 +113,7 @@ const Register = () => {
                                     onChange={(event) => {
                                         setUsername(event.target.value);
                                     }} />
+                                <span className="error">{errors?.username?.message}</span>
                             </div>
                         </div>
 
@@ -122,6 +129,7 @@ const Register = () => {
                                     onChange={(event) => {
                                         setPassword(event.target.value);
                                     }} />
+                                <span className="error">{errors?.password?.message}</span>
                             </div>
                         </div>
 
