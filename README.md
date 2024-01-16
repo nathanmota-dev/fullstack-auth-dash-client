@@ -175,6 +175,9 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar um pull request.
 
+<br />
+</details>
+
 ### :copyright: Copyright disclaimer/Aviso de direitos autorais
 
 <details>
