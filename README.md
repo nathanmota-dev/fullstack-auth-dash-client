@@ -157,6 +157,9 @@ BackEnd:
 
 5. Abra seu navegador em: [http://localhost:5173/](http://localhost:5173/) para visualizar o projeto em execução.
 
+<br />
+</details>
+
 ### :tada: Contributions/Contribuições
 
 <details>
